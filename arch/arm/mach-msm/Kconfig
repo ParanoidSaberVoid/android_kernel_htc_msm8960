@@ -1609,7 +1609,6 @@ config MSM_MPDEC
 	bool "MSM_MPDECISION from @ShowP1984"
 	depends on MSM_SMP
 	select MSM_MPDEC_INPUTBOOST_CPUMIN
-	default n
 	help
 	  This enables kernel based multi core control.
 	  (up/down hotplug based on load)
