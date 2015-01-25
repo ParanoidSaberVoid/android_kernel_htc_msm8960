@@ -1002,13 +1002,10 @@ static inline unsigned int do_avg_nr_running(struct rq *rq)
 
 static inline void inc_nr_running(struct rq *rq)
 {
-	write_seqcount_begin(&rq->ave_seqcnt);
-	rq->ave_nr_running = do_avg_nr_running(rq);
-	rq->nr_last_stamp = rq->clock_task;
-	write_seqcount_end(&rq->ave_seqcnt);
 #ifdef CONFIG_TDF_RQ_STATS
 	sched_update_tdf(cpu_of(rq), rq->nr_running, true);
 #endif
+
 #ifdef CONFIG_INTELLI_PLUG
 	struct nr_stats_s *nr_stats = &per_cpu(runqueue_stats, rq->cpu);
 #endif
@@ -1020,21 +1017,22 @@ static inline void inc_nr_running(struct rq *rq)
 #endif
 	sched_update_nr_prod(cpu_of(rq), rq->nr_running, true);	
 	rq->nr_running++;
+
 #ifdef CONFIG_INTELLI_PLUG
 	write_seqcount_end(&nr_stats->ave_seqcnt);
 #endif
-}
-
-static inline void dec_nr_running(struct rq *rq)
-{
-	sched_update_nr_prod(cpu_of(rq), rq->nr_running, false);
 	write_seqcount_begin(&rq->ave_seqcnt);
 	rq->ave_nr_running = do_avg_nr_running(rq);
 	rq->nr_last_stamp = rq->clock_task;
 	write_seqcount_end(&rq->ave_seqcnt);
+}
+
+static inline void dec_nr_running(struct rq *rq)
+{
 #ifdef CONFIG_TDF_RQ_STATS
 	sched_update_tdf(cpu_of(rq), rq->nr_running, false);
 #endif
+
 #ifdef CONFIG_INTELLI_PLUG
 	struct nr_stats_s *nr_stats = &per_cpu(runqueue_stats, rq->cpu);
 #endif
@@ -1046,9 +1044,15 @@ static inline void dec_nr_running(struct rq *rq)
 #endif
 	sched_update_nr_prod(cpu_of(rq), rq->nr_running, false);
  	rq->nr_running--;
+
 #ifdef CONFIG_INTELLI_PLUG
 	write_seqcount_end(&nr_stats->ave_seqcnt);
 #endif
+	sched_update_nr_prod(cpu_of(rq), rq->nr_running, false);
+	write_seqcount_begin(&rq->ave_seqcnt);
+	rq->ave_nr_running = do_avg_nr_running(rq);
+	rq->nr_last_stamp = rq->clock_task;
+	write_seqcount_end(&rq->ave_seqcnt);
 }
 
 extern void update_rq_clock(struct rq *rq);
