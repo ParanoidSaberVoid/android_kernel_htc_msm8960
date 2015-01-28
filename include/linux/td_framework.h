@@ -15,6 +15,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 #ifdef CONFIG_CPU_UNDERCLOCK
 /* cpufreq sleep min/max */
 #define TDF_FREQ_SLEEP_MAX	189000
@@ -40,7 +41,7 @@ else
 else
 #define TDF_FREQ_IDLE		384000
 #endif
-#define TDF_FREQ_PWRSAVE_MAX	1134000
+#define TDF_FREQ_PWRSAVE_MAX	1080000
 
 /* output debug info to kmsg, adds some heavy overhead! */
 #ifdef CONFIG_TDF_DEBUG
