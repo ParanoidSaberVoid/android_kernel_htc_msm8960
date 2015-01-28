@@ -20,7 +20,7 @@
 /* cpufreq sleep min/max */
 #define TDF_FREQ_SLEEP_MAX	189000
 #define TDF_FREQ_SLEEP_MIN	81000
-else
+#else
 /* cpufreq sleep min/max */
 #define TDF_FREQ_SLEEP_MAX	384000
 #define TDF_FREQ_SLEEP_MIN	384000
@@ -28,17 +28,17 @@ else
 
 #ifdef CONFIG_CPU_OVERCLOCK
 #define TDF_FREQ_MAX		1782000
-else
+#else
 #define TDF_FREQ_MAX		1512000
 #endif
 #ifdef CONFIG_CPU_UNDERCLOCK
 #define TDF_FREQ_MIN		81000
-else
+#else
 #define TDF_FREQ_MIN		384000
 #endif
 #ifdef CONFIG_CPU_UNDERCLOCK
 #define TDF_FREQ_IDLE		81000
-else
+#else
 #define TDF_FREQ_IDLE		384000
 #endif
 #define TDF_FREQ_PWRSAVE_MAX	1080000
