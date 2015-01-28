@@ -2243,6 +2243,7 @@ config MSM_MPDEC_INPUTBOOST_CPUMIN
 #
 # CPU Hotplug Driver Choices
 #
+
 choice
 	prompt "CPU HotPlug Driver Choice"
 	default MSM_MPDECISION
