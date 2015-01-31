@@ -118,23 +118,23 @@ static int __init cy8c_read_s2w_cmdline(char *s2w)
 }
 __setup("s2w=", cy8c_read_s2w_cmdline);
 
-static int __init cy8c_read_d2w_cmdline(char *d2w)
+static int __init cy8c_read_dt2w_cmdline(char *dt2w)
 {
-	if (strcmp(d2w, "1") == 0) {
-		printk(KERN_INFO "[cmdline_d2w]: Doubletap2Wake enabled on button 1. | d2w='%s'", d2w);
-		d2w_switch = 1;
-	} else if (strcmp(d2w, "2") == 0) {
-		printk(KERN_INFO "[cmdline_d2w]: Doubletap2Wake enabled on button 2. | d2w='%s'", d2w);
-		d2w_switch = 2;
-	} else if (strcmp(d2w, "3") == 0) {
-		printk(KERN_INFO "[cmdline_d2w]: Doubletap2Wake enabled on button 3. | d2w='%s'", d2w);
-		d2w_switch = 3;
-	} else if (strcmp(d2w, "0") == 0) {
-		printk(KERN_INFO "[cmdline_d2w]: Doubletap2Wake disabled. | d2w='%s'", d2w);
-		d2w_switch = 0;
+	if (strcmp(dt2w, "1") == 0) {
+		printk(KERN_INFO "[cmdline_dt2w]: Doubletap2Wake enabled on button 1. | dt2w='%s'", dt2w);
+		dt2w_switch = 1;
+	} else if (strcmp(dt2w, "2") == 0) {
+		printk(KERN_INFO "[cmdline_dt2w]: Doubletap2Wake enabled on button 2. | dt2w='%s'", dt2w);
+		dt2w_switch = 2;
+	} else if (strcmp(dt2w, "3") == 0) {
+		printk(KERN_INFO "[cmdline_dt2w]: Doubletap2Wake enabled on button 3. | dt2w='%s'", dt2w);
+		dt2w_switch = 3;
+	} else if (strcmp(dt2w, "0") == 0) {
+		printk(KERN_INFO "[cmdline_dt2w]: Doubletap2Wake disabled. | dt2w='%s'", dt2w);
+		dt2w_switch = 0;
 	} else {
-		printk(KERN_INFO "[cmdline_d2w]: No valid input found. Doubletap2Wake disabled. | s2w='%s'", d2w);
-		d2w_switch = 0;
+		printk(KERN_INFO "[cmdline_dt2w]: No valid input found. Doubletap2Wake disabled. | s2w='%s'", dt2w);
+		dt2w_switch = 0;
 	}
 	return 1;
 }
