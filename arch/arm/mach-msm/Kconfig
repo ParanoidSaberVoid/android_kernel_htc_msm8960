@@ -2275,6 +2275,10 @@ config TRIPNDROID_HOTPLUG
 	select TDF_HOTPLUG
 	help
 	  This option enables turning CPUs on/off according to scheduler loads
+config MSM_SLEEPER
+	bool "MSM-Sleeper Hotplug driver by @flar2"
+ 	help
+	  CPU hotplug driver 
 endchoice
 
 config MSM_GSBI9_UART
