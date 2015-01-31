@@ -319,7 +319,7 @@ static ssize_t store_two_phase_freq(struct kobject *a, struct attribute *b,
 	return count;
 }
 
-static int input_event_min_freq_array[NR_CPUS] = {1134000, 1134000} ;
+static int input_event_min_freq_array[NR_CPUS] = {1134000, 648000} ;
 
 static ssize_t show_input_event_min_freq
 (struct kobject *kobj, struct attribute *attr, char *buf)
@@ -710,7 +710,7 @@ static void dbs_freq_increase(struct cpufreq_policy *p, unsigned load, unsigned 
 			CPUFREQ_RELATION_L : CPUFREQ_RELATION_H);
 }
 
-int set_two_phase_freqe(int cpufreq)
+int set_two_phase_freq(int cpufreq)
 {
 	int i  = 0;
 	for ( i = 0 ; i < NR_CPUS; i++)
@@ -718,11 +718,11 @@ int set_two_phase_freqe(int cpufreq)
 	return 0;
 }
 
-void set_two_phase_freqe_by_cpu ( int cpu_nr, int cpufreq){
+void set_two_phase_freq_by_cpu ( int cpu_nr, int cpufreq){
 	two_phase_freq_array[cpu_nr-1] = cpufreq;
 }
 
-int input_event_boostede(void)
+int input_event_boosted(void)
 {
 	unsigned long flags;
 
@@ -834,6 +834,8 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		if (cur_load > max_load_freq)
 			max_load_freq = cur_load * policy->cur;
 	}
+
+	cpufreq_notify_utilization(policy, cur_load);
 
 	for_each_online_cpu(j) {
 		struct cpu_dbs_info_s *j_dbs_info;
@@ -967,7 +969,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		}
 	}
 
-	if (input_event_boostede())
+	if (input_event_boosted())
 	{
 		return;
 	}
@@ -1035,7 +1037,7 @@ static void do_dbs_timer(struct work_struct *work)
 				delay -= jiffies % delay;
 		}
 	} else {
-		if (input_event_boostede())
+		if (input_event_boosted())
 			goto sched_wait;
 
 		__cpufreq_driver_target(dbs_info->cur_policy,
@@ -1176,7 +1178,7 @@ static struct input_handler dbs_input_handler = {
 };
 
 
-void set_input_event_min_freq_by_cpue ( int cpu_nr, int cpufreq){
+void set_input_event_min_freq_by_cpu ( int cpu_nr, int cpufreq){
 	input_event_min_freq_array[cpu_nr-1] = cpufreq;
 }
 static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
