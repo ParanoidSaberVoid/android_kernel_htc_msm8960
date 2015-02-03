@@ -138,7 +138,7 @@ static int __init cy8c_read_dt2w_cmdline(char *dt2w)
 	}
 	return 1;
 }
-__setup("d2w=", cy8c_read_d2w_cmdline);
+__setup("dt2w=", cy8c_read_dt2w_cmdline);
 
 static int __init cy8c_read_pdt_cmdline(char *pdt)
 {
