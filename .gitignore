@@ -34,6 +34,8 @@ modules.builtin
 *.gcno
 CompileLog
 build.sh
+*.rej
+*.orig
 
 #
 # Top-level generic files
