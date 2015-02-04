@@ -28,10 +28,32 @@
 #include <linux/sysfs.h>
 #include <linux/fastchg.h>
 
-#define FAST_CHARGE_VERSION	"version 1.0 by Paul Reioux"
+#define FAST_CHARGE_VERSION	"version 1.1 by Paul Reioux tweaked by Paul Keith"
 
 int force_fast_charge;
 int fast_charge_level;
+
+#ifdef CONFIG_CMDLINE_OPTIONS
+int fast_charge_cmdline;
+static int __init fastchg_read_fstchg_cmdline(char *fstchg)
+{
+	if (strcmp(fstchg, "2") == 0) {
+		printk(KERN_INFO "[cmdline_fstchg]: Fastcharge Custom Mode Enabled. | fstchg='%s' ", fstchg);
+		fast_charge_cmdline = 2;
+	} else if (strcmp(fstchg, "1") == 0) {
+                printk(KERN_INFO "[cmdline_fstchg]: Fastcharge Unconditional Mode Enabled. | fstchg='%s' ", fstchg);
+                fast_charge_cmdline = 1;
+        } else if (strcmp(fstchg, "0") == 0) {
+                printk(KERN_INFO "[cmdline_fstchg]: Fastcharge Disabled. | fstchg='%s' ", fstchg);
+                fast_charge_cmdline = 0;
+        } else {
+                printk(KERN_INFO "[cmdline_fstchg]: No valid input found. Fastcharge Disabled. | fstchg='%s' ", fstchg);
+                fast_charge_cmdline = 0;
+	}
+	return 1;
+}
+__setup("fstchg=", fastchg_read_fstchg_cmdline);
+#endif
 
 /* sysfs interface for "force_fast_charge" */
 static ssize_t force_fast_charge_show(struct kobject *kobj,
@@ -139,10 +161,17 @@ static struct kobject *force_fast_charge_kobj;
 int force_fast_charge_init(void)
 {
 	int force_fast_charge_retval;
-
-	 /* Forced fast charge disabled by default */
+#ifdef CONFIG_CMDLINE_OPTIONS
+	if (fast_charge_cmdline == 2) {
+		force_fast_charge = FAST_CHARGE_FORCE_CUSTOM_MA;
+	} else if (fast_charge_cmdline == 1) {
+		force_fast_charge = FAST_CHARGE_FORCE_AC;
+	} else {
+		force_fast_charge = FAST_CHARGE_DISABLED;
+	}
+#else
 	force_fast_charge = FAST_CHARGE_DISABLED;
-
+#endif
 	force_fast_charge_kobj
 		= kobject_create_and_add("fast_charge", kernel_kobj);
 
