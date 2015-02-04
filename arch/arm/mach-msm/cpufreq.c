@@ -36,12 +36,14 @@
 
 #include "acpuclock.h"
 
+#ifdef CONFIG_MSM_SLEEPER
 /* maxscroff */
 uint32_t maxscroff_freq = 384000;
 uint32_t maxscroff = 1;
 
 /* ex max freq */
 uint32_t ex_max_freq;
+#endif
 
 static DEFINE_MUTEX(l2bw_lock);
 
@@ -520,6 +522,7 @@ static int msm_cpufreq_resume(struct cpufreq_policy *policy)
 	return NOTIFY_DONE;
 }
 
+#ifdef CONFIG_MSM_SLEEPER
 /** max freq interface **/
 
 static ssize_t show_ex_max_freq(struct cpufreq_policy *policy, char *buf)
@@ -645,12 +648,15 @@ struct freq_attr msm_cpufreq_attr_max_screen_off = {
 };
 
 /** end maxscreen off sysfs interface **/
+#endif
 
 static struct freq_attr *msm_freq_attr[] = {
 	&cpufreq_freq_attr_scaling_available_freqs,
+#ifdef CONFIG_MSM_SLEEPER
 	&msm_cpufreq_attr_max_screen_off_khz,
  	&msm_cpufreq_attr_max_screen_off,
 	&msm_cpufreq_attr_ex_max_freq,
+#endif
 	NULL,
 };
 
