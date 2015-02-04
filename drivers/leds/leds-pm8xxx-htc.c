@@ -90,7 +90,7 @@ static int lut_coefficient = 100;
 static int dutys_array[64];
 
 #ifdef CONFIG_BLN
-static int bln = 1;
+int bln = 1;
 
 #ifdef CONFIG_CMDLINE_OPTIONS
 static int __init pm8xxx_read_blncfg_cmdline(char *blncfg)
