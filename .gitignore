@@ -33,6 +33,8 @@ modules.builtin
 *.patch
 *.gcno
 *.kdev4
+*.rej
+*.orig
 
 #
 # Top-level generic files
