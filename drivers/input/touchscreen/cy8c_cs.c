@@ -141,6 +141,28 @@ static int __init cy8c_read_dt2w_cmdline(char *dt2w)
 }
 __setup("dt2w=", cy8c_read_dt2w_cmdline);
 
+static int __init cy8c_read_dt2s_cmdline(char *dt2s)
+{
+	if (strcmp(dt2s, "1") == 0) {
+		printk(KERN_INFO "[cmdline_dt2s]: Doubletap2Sleep enabled on button 1. | dt2s='%s'", dt2s);
+		dt2s_switch = 1;
+	} else if (strcmp(dt2s, "2") == 0) {
+		printk(KERN_INFO "[cmdline_dt2s]: Doubletap2Sleep enabled on button 2. | dt2s='%s'", dt2s);
+		dt2s_switch = 2;
+	} else if (strcmp(dt2s, "3") == 0) {
+		printk(KERN_INFO "[cmdline_dt2s]: Doubletap2Sleep enabled on button 3. | dt2s='%s'", dt2s);
+		dt2s_switch = 3;
+	} else if (strcmp(dt2s, "0") == 0) {
+		printk(KERN_INFO "[cmdline_dt2s]: Doubletap2Sleep disabled. | dt2s='%s'", dt2s);
+		dt2s_switch = 0;
+	} else {
+		printk(KERN_INFO "[cmdline_dt2s]: No valid input found. Doubletap2Sleep disabled. | s2w='%s'", dt2s);
+		dt2s_switch = 0;
+	}
+	return 1;
+}
+__setup("dt2s=", cy8c_read_dt2s_cmdline);
+
 static int __init cy8c_read_pdt_cmdline(char *pdt)
 {
 	if (strcmp(pdt, "1") == 0) {
