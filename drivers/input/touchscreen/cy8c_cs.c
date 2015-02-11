@@ -286,7 +286,6 @@ static void dt2s_func(int btn_state, int btn_id, cputime64_t dtrigger_time) {
 #if DEBUG
                printk(KERN_INFO"[DT2W]: OFF->ON\n");
 #endif
-#endif
                sweep2wake_pwrtrigger();
 	}
 
@@ -383,6 +382,7 @@ static void do_sweep2wake(int btn_state, int btn_id, cputime64_t trigger_time) {
 
 	return;
 }
+#endif
 
 int i2c_cy8c_read(struct i2c_client *client, uint8_t addr, uint8_t *data, uint8_t length)
 {
